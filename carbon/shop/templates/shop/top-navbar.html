@@ -1,0 +1,78 @@
+{%  load static %}
+<!-- <script>
+  $(function() {
+
+  $('[data-toggle="modal"]').hover(function() {
+    var modalId = $(this).data('target');
+    $(modalId).modal('show');
+
+  });
+
+});
+
+
+ </script> -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-light navbar-expand-sm bg-white fixed-top">
+
+        <div class="container">
+           <a class="navbar-brand" href="{%  url 'shop:allProdCat' %}"> <img class="rounded" style="height:50px; width:100px;" src="{%  static 'img/HHA.PNG'%}"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <div class="collapse navbar-collapse " id="Navbar">
+                <ul class="navbar-nav mr-auto">
+                  {% if 'M' in request.path%}
+                    <li class="nav-item active"><a class="nav-link" id="Men" href="{%  url 'shop:maleProdCat' %}"><span class="fa fa-male fa-lg"></span> MEN</a></li>
+                    <li class="nav-item "><a class="nav-link" id="Wom"  href="{%  url 'shop:femaleProdCat' %}"><span class="fa fa-female fa-lg"></span> WOMEN</a></li>
+                    {% elif 'F' in request.path%}
+                    <li class="nav-item "><a class="nav-link" id="Men" href="{%  url 'shop:maleProdCat' %}"><span class="fa fa-male fa-lg"></span> MEN</a></li>
+                    <li class="nav-item active"><a class="nav-link" id="Wom"  href="{%  url 'shop:femaleProdCat' %}"><span class="fa fa-female fa-lg"></span> WOMEN</a></li>
+                    {%  else %}
+                    <li class="nav-item "><a class="nav-link" id="Men" href="{%  url 'shop:maleProdCat' %}"><span class="fa fa-male fa-lg"></span> MEN</a></li>
+                    <li class="nav-item "><a class="nav-link" id="Wom"  href="{%  url 'shop:femaleProdCat' %}"><span class="fa fa-female fa-lg"></span> WOMEN</a></li>
+                    {%  endif %}
+                </ul>
+
+
+                    {% if request.user.is_authenticated %} <!-- and request.user.first_name %} -->
+                    <div class="dropdown mr-2">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">{{ request.user.username }}
+                      <span class="fas fa-user-circle"></span></button>
+                      <ul class="dropdown-menu text-center" role="menu" aria-labelledby="menu1">
+                        <a style="color:black;"  href="{% url 'order:order_History' %}" class="dropdrow-item">  ~Order History</a>
+                        <a style="color:black;" href="{% url 'accounts:logout' %}" class="dropdown-item"><i class="fa fa-sign-out-alt"></i>Sign Out </a>
+                      </ul>
+                      </div>
+
+
+
+                        <span class="navbar-text mr-2" >
+                          <a class="nav-link"  href="{% url 'cart:cart_detail' %}"><span class="fa fa-shopping-cart"></span>( {{ item_count }} )</a>
+                        </span>
+                    {% else %}
+                    <!-- Nav tabs -->
+                    <div class="dropdown mr-4">
+                      <a style="color:black;" href="#" data-toggle="dropdown"><i class="fas fa-user fa-lg"></i>{{ request.user.username }}</a>
+
+                    <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="{%  url 'accounts:login' %}"><i class="fa fa-sign-in-alt"></i>LOGIN</a>
+
+                      <a class="dropdown-item" href="{%  url 'accounts:signup' %}"><i class="fa fa-user-plus"></i>Register</a>
+                    </div>
+                  </div>
+
+                        <span class="navbar-text mr-2" >
+                          <a class="nav-item"  href="{% url 'cart:cart_detail' %}"><i class="fa fa-shopping-cart fa-lg"></i>( {{ item_count }} )</a>
+                        </span>
+
+
+                    {% endif %}
+
+
+            </div>
+        </div>
+    </nav>

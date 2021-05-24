@@ -1,0 +1,52 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+  Order History - HHA Outlet
+{% endblock %}
+
+{% block content %}
+  <div>
+    <div class="text-center">
+      <br>
+      <h1 class="text-center my_title">Order History</h1>
+      <br>
+
+      {% if order_details %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Order number</th>
+            <th>Order Date</th>
+            <th>Total Amaunt</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for order in order_details %}
+          <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.created|date:"d M Y" }}</td>
+            <td>Rs:{{ order.total }}</td>
+            <td> <i class="fas fa-check"></i> Complete</td>
+            <td> <a href="{% url 'order:order_detail' order.id %}">View order</a> </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+      {% else %}
+      <p>You have not placed any orders yet. <br> <br> <a href="{% url 'shop:allProdCat' %}"
+        class="btn btn-secondary">Continue Shopping</a> </p>
+
+      {% endif %}
+
+    </div>
+  </div>
+  <br>
+  <br>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+
+
+{% if 'M' in request.path%}
+      <div >
+
+        <div class="scrollmenu topnav nav-item" aria-labelledby="navbarDropdown" id="mytabs">
+          {%  if category %}
+            <a   href="{%  url 'shop:maleProdCat' %}">All Products</a>
+          {% else %}
+          <a  class="active" href="{%  url 'shop:maleProdCat' %}">All Products</a>
+          {% endif %}
+            {%  for cat in links %} <!-- links in context_processors -->
+
+              {% if cat.gender == 'M' %}
+              {%  if cat.name == category.name %}
+              <a  class="active" href="{{cat.get_url}}">{{category.name |slice:":-1"}}</a>
+              {% else %}
+              <a href="{{cat.get_url}}">{{cat.name|slice:":-1" }}</a> <!-- for Product Categories -->
+              {% endif %}
+              {% endif %}
+
+            {% endfor %}
+            {% comment %} <div class="dropdown-divider"></div> {% endcomment %}               <!-- changes here -->
+        </div>
+      </div>
+
+{% elif 'F' in request.path%}
+      <div >
+
+        <div class="scrollmenu topnav nav-item" aria-labelledby="navbarDropdown" id="mytabs">
+          {%  if category %}
+            <a   href="{%  url 'shop:femaleProdCat' %}">All Products</a>
+          {% else %}
+          <a  class="active" href="{%  url 'shop:femaleProdCat' %}">All Products</a>
+          {% endif %}
+            {%  for cat in links %} <!-- links in context_processors -->
+
+              {% if cat.gender == 'F' %}
+              {%  if cat.name == category.name %}
+              <a  class="active" href="{{cat.get_url}}">{{category.name |slice:":-1"}}</a>
+              {% else %}
+              <a href="{{cat.get_url}}">{{cat.name|slice:":-1" }}</a> <!-- for Product Categories -->
+              {% endif %}
+              {% endif %}
+
+            {% endfor %}
+            {% comment %} <div class="dropdown-divider"></div> {% endcomment %}               <!-- changes here -->
+        </div>
+      </div>
+
+        {%else%}
+        <div class="container topnav ">
+          <h1 class="text-center text-muted" style="text-decoration:none; ">LET'S WEAR IT</h1>
+
+        </div>
+        {% endif %}
+<div>
+
+
+      {% comment %} {% if item_count > 0 %}
+        <div class="nav-item">
+          <a class="nav-link" href="{% url 'cart:cart_detail' %}"><i class="fas fa-shopping-cart"></i>( {{ item_count }} )</a>
+        </div>
+      {% endif %} {% endcomment %}
+
+    </div>

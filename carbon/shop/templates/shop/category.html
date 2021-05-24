@@ -1,0 +1,293 @@
+{%  extends "shop/base.html" %}
+{%  load static %}
+{%  block metadescription %}
+    {%  if category %}
+        {{ category.description|truncatewords:155 }}
+    {% else %}
+        Welcome to the cushion store where you can buy comfy and awesome cushions.
+    {%  endif %}
+{%  endblock %}
+{%  block title %}
+    {%  if category %}
+        {{  category.name }} - Perfect Cushion Store
+    {% else %}
+        See Our Cushion Collection - Perfect Cushion Store
+    {%  endif %}
+{%  endblock %}
+
+{% block content %}
+    <!--Breadcrumb navigation-->
+    {%  if category %}
+    <div class="container">
+
+<!--
+        <div class="row my_row_class">
+            <div class="mx-auto">
+                <p><a href="{%  url 'shop:allProdCat' %}">Our Product Collection</a> |  {{category.name}}</p>
+            </div> -->
+            <div class="row">
+              <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{%  url 'shop:allProdCat' %}">Our Product Collection</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{category.name}}</li>
+    </ol>
+  </nav>
+            </div>
+
+        </div>
+    {%  endif %}
+    <div class="mx-auto">
+     {%  if category %}
+         <img class="my_image" src="{{category.image.url}}" alt="{{category.name}}"> <!-- from the image variable -->
+     </div>
+     <br>
+     <div>
+         <h1 class="text-center my_title">{{category.name}}</h1>
+         <p class="text-justify">{{category.description}}</p>
+     </div>
+     {% elif 'M' in request.path%}
+     <div class=" my_image my_image_padding mt-1 mb-5">
+     <div class="row row-content">
+        <div class="col">
+             <div id="mycarousel" class="carousel slide car_image" data-ride="carousel">
+                  <div class="carousel-inner" role="listbox">
+
+                     <div class="carousel-item active">
+                         <img class="d-block img-fluid rounded" style="height: 250px; width:100%;"
+                             src="{%  static 'img/catban.jpg' %}" alt="Men">
+
+
+                     </div>
+                     {%  for cat in links %}
+                        {% if cat.gender == 'M' %}
+                     <div class="carousel-item">
+
+                         <img class="d-block img-fluid rounded car-image" style="height: 250px; width:100%;" src="{{cat.image.url}}" alt="Buffet">
+                     </div>
+                     {% endif %}
+                     {% endfor %}
+                 </div>
+                <ol class="carousel-indicators">
+                     <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                     <li data-target="#mycarousel" data-slide-to="1"></li>
+                      <li data-target="#mycarousel" data-slide-to="2"></li>
+                       <li data-target="#mycarousel" data-slide-to="3"></li>
+
+                 </ol>
+                 <a class="carousel-control-prev"  href="#mycarousel" role="button" data-slide="prev">
+                     <span  class="carousel-control-prev-icon"></span>
+                 </a>
+                 <a class="carousel-control-next" href="#mycarousel" role="button" data-slide="next">
+                     <span class="carousel-control-next-icon"></span>
+                 </a>
+
+
+
+        </div>
+     </div>
+     </div>
+     </div>
+     {% elif 'F' in request.path%}
+     <div class=" my_image my_image_padding mt-1 mb-5">
+     <div class="row row-content">
+        <div class="col">
+          <div id="mycarousel" class="carousel slide car_image" data-ride="carousel">
+               <div class="carousel-inner" role="listbox">
+
+                  <div class="carousel-item active">
+                      <img class="d-block img-fluid rounded" style="height: 250px; width:100%;"
+                          src="{%  static 'img/catban.jpg' %}" alt="Men">
+
+
+                  </div>
+                  {%  for cat in links %}
+                     {% if cat.gender == 'F' %}
+                  <div class="carousel-item">
+
+                      <img class="d-block img-fluid rounded car-image" style="height: 250px; width:100%;" src="{{cat.image.url}}" alt="Buffet">
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+              </div>
+             <ol class="carousel-indicators">
+                  <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                  <li data-target="#mycarousel" data-slide-to="1"></li>
+                   <li data-target="#mycarousel" data-slide-to="2"></li>
+                    <li data-target="#mycarousel" data-slide-to="3"></li>
+
+              </ol>
+              <a class="carousel-control-prev"  href="#mycarousel" role="button" data-slide="prev">
+                  <span  class="carousel-control-prev-icon"></span>
+              </a>
+              <a class="carousel-control-next" href="#mycarousel" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+              </a>
+
+
+
+     </div>
+     </div>
+     </div>
+     </div>
+
+     {%  else %}
+ <div class=" my_image my_image_padding">
+ <div class="row row-content">
+    <div class="col">
+         <div id="mycarousel" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner" role="listbox">
+                 <div class="carousel-item active">
+                     <img class="d-block img-fluid rounded"
+                         src="{%  static 'img/catban.jpg' %}" alt="Men">
+                         <div class="carousel-caption d-none d-md-block">
+                           <a href="{%  url 'shop:maleProdCat' %}" class="btn btn-secondary btn-lg rounded mr-2 mb-5" style="background-color:black;">Shop Men</a>
+                           <a  href="{%  url 'shop:femaleProdCat' %}" class="btn btn-secondary btn-lg rounded mb-5 " style="background-color:black;">Shop Wom</a>
+                         </div>
+
+                 </div>
+                 <div class="carousel-item">
+                     <img class="d-block img-fluid rounded" src="{%  static 'img/catban.jpg' %}" alt="Buffet">
+
+                   <div class="carousel-caption d-none d-md-block">
+                     <a href="{%  url 'shop:maleProdCat' %}" class="btn btn-secondary btn-lg rounded mr-2 mb-5" style="background-color:black;">Shop Men</a>
+                     <a href="{%  url 'shop:femaleProdCat' %}" class="btn btn-secondary btn-lg rounded mb-5" style="background-color:black;">Shop Wom</a>
+                   </div>
+
+
+                  </div>
+
+             </div>
+            <ol class="carousel-indicators">
+                 <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                 <li data-target="#mycarousel" data-slide-to="1"></li>
+
+             </ol>
+             <a class="carousel-control-prev" href="#mycarousel" role="button" data-slide="prev">
+                 <span class="carousel-control-prev-icon"></span>
+             </a>
+             <a class="carousel-control-next" href="#mycarousel" role="button" data-slide="next">
+                 <span class="carousel-control-next-icon"></span>
+             </a>
+
+
+
+    </div>
+ </div>
+ </div>
+ </div>
+
+     <br>
+
+    <div>
+        <h1 class="text-center my_title">Our Products Collection</h1>
+        <p class="text-justify">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Est lorem ipsum dolor sit amet consectetur adipiscing. Feugiat in fermentum posuere urna nec tincidunt praesent. Cras adipiscing enim eu turpis egestas pretium aenean pharetra. Cursus metus aliquam eleifend mi in nulla posuere sollicitudin aliquam. Porttitor lacus luctus accumsan tortor posuere ac ut. Nunc eget lorem dolor sed viverra ipsum nunc. Cras adipiscing enim eu turpis egestas. Tortor dignissim convallis aenean et tortor at risus viverra. Neque viverra justo nec ultrices dui. Ultricies mi quis hendrerit dolor magna eget. Neque laoreet suspendisse interdum consectetur libero id faucibus nisl. </p>
+    <hr>
+    </div>
+    
+{%  endif %}
+<!-- Product Container using bootstrap and custom classes in custom.css file -->
+</div>
+  {% if 'M' in request.path or 'F' in request.path%}
+    <div class= "container">
+        <div class = "row row-content align-items-center">
+            {%  for product in products %} <!--products.object_list??? -->
+
+                <div class="my_bottom_margin col-12 col-sm-12 col-md-6 services-center ">
+                    <div class="card text-center border border-secondary rounded prod" style="width: 18;">
+                        <div class="img-container">
+                          <a href="{{ product.get_url }} "><img class="card-img-top my_image" src="{{product.image.url}}" alt=""{{productname}}></a>
+
+                        <div class="price-top">
+                          <h6>Rs:${{product.price}}</h6>
+
+                        </div>
+                        <div class="view-top">
+                          <span  style="float: left; color:white;" href="#" data-toggle="modal" data-target="#modalQuickView" title="Quick View" class="fa fa-eye fa-2x"/>
+
+                        </div>
+
+                        </div>
+                        <div class="card-body ">
+                            <h4 class="card-title room-info">{{product.name}}</h4>
+                            <p>Rs:{{product.price}}</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal fade" id="modalQuickView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="content">
+                    <div class="modal-content">
+                      <div class="modal-header ">
+                        <h1 class="modal-title text-center">{{ product.name }} </h1>
+
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-lg-6" >
+                              <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                          </div>
+                          <div class="col-lg-6">
+
+                            <h3 class="card-text">Rs: ${{ product.price }}</h3>
+
+
+                                <form class='form mt-5 mb-2' method='POST' action='{% url 'cart:add_cart' product.id %}' >
+                                  {% if product.variation_set.all %}
+
+                                      {% if product.variation_set.sizes %}
+                                      <select class='form-control mb-2 text-center' name='size'>
+                                      {% for item in product.variation_set.sizes %}
+
+                                        <option value='{{ item.title|lower }}'>{{ item.title|capfirst }}</option>
+                                        {% endfor %}
+                                      </select>
+                                      {% endif %}
+
+                                  {% endif %}
+                                    {% csrf_token %}
+
+                                    {%  if product.stock <= 0 %}
+                                        <p class="text-justify my_prod_text"><b>OUT OF STOCK</b></p>
+                                    {%  else %}
+                                         <input class='btn btn-default btn-block' type='submit' value='Add to cart'/>
+                                    {% endif %}
+
+
+
+                                  </form>
+
+
+                          </div>
+                        </div>
+                        <hr>
+                        <p class="text-center text-muted small" style="float:right; text-decoration:underline;" > <a href="{{ product.get_url }}">See more product details</a></p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {%  endfor %}
+        </div>
+        {# PAginator Code #}
+
+        <div class="mx-auto">
+            {%  if products.paginator.num_pages > 1 %}
+                <hr>
+                <div class="text-center">
+                    {% for pg in products.paginator.page_range %}
+                        <a href="?page={{pg}}" class="btn btn-light btn-sm {%  if products.number == pg %}active{%  endif %}">{{pg}}</a>
+                    {%  endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <br>
+    </div>
+    {% endif %}
+
+
+{% endblock %}

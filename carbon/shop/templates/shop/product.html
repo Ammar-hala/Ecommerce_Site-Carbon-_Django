@@ -1,0 +1,125 @@
+
+
+{%  extends 'shop/base.html' %}
+{%  load static %}
+{%  block metadescription %}
+    {{ product.description|truncatewords:155 }}
+{% endblock %}
+{%  block title %}
+    {{  product.name }} - Perfect Cushion Store
+{%  endblock %}
+{%  block content %}
+    <div class="row my_prod_row_class">
+        <div class="mx-auto">
+            <p><a href="{% url 'shop:allProdCat' %}">Home</a> | <a href="{{  product.category.get_url }}">{{ product.category }}</a> | {{  product.name }}</p>
+        </div>
+        </div>
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-12 col-md-6 text-center">
+                  <div class="card" style="width: 30rem;">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 text-center">
+                  <div class="card" style="width: 30rem;">
+
+                    <div class="card-body">
+                      <h1 class="card-title product">{{ product.name }}</h1>
+
+                      <h2 class="card-title mb-2 text-muted product">
+                        Category: <span class="badge badge-pill badge-info">{{ product.category|slice:":1" }}</span></h2>
+                      <h5 class="card-subtitle product">
+                      <span class="badge badge-pill badge-info">Rs: {{ product.price }}</span></h5>
+                      <!-- <h5 class="my_title card-text">Product Description</h5> -->
+                    <h3 class="product">  <span class="badge badge-pill badge-secondary">Product Description</span></h3>
+                      <p class="text-justify card-text text-monospace">{{ product.description }}</p>
+
+                  <form class='form' method='POST' action='{% url 'cart:add_cart' product.id %}' >
+
+
+         <!-- {% if product.variation_set.all %}
+
+            {% if product.variation_set.sizes %}
+            <select class='form-control' name='size'>
+            {% for item in product.variation_set.sizes %}
+              <option value='{{ item.title|lower }}'>{{ item.title|capfirst }}</option>
+              {% endfor %}
+            </select>
+            {% endif %}
+
+        {% endif %} -->
+
+        {% if product.variation_set.all %}
+
+           {% if product.variation_set.sizes %}
+        <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-6 pt-0">Size:</legend>
+      <div class="row">
+        {% for item in product.variation_set.sizes %}
+        <div class="form-check col-4">
+
+          <input class="form-check-input" type="radio" name="size" value='{{ item.title|lower }}'>
+          <label class="form-check-label">
+            {{ item.title|capfirst|slice:":1"  }}
+          </label>
+        </div>
+          {% endfor %}
+      </div>
+    </div>
+  </fieldset>
+  {% endif %}
+
+{% endif %}
+
+                      {% csrf_token %}
+
+                      {%  if product.stock <= 0 %}
+                          <p class="text-justify my_prod_text"><b>OUT OF STOCK</b></p>
+                      {%  else %}
+                      <button type="submit" class="btn btn-success">
+                        <i class="fa fa-cart-arrow-down fa-lg"></i> ADD
+                    </button>
+                   		{% endif %}
+
+
+
+                   	</form>
+
+                    <!-- {%  if product.stock <= 0 %}
+                        <p class="text-justify my_prod_text"><b>OUT OF STOCK</b></p>
+                    {%  else %}
+                        <a class="btn btn-secondary" href="#">Add to Cart</a>
+                    {% endif %}    -->
+                    </div>
+                  </div>
+
+
+
+<!--
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                <div>
+<!--- PRODUCT TITLE --->
+                    <!-- <h1 class="my_prod_title">{{ product.name }}</h1>
+                    <p>Rs:{{ product.price }}</p> -->
+<!--- PRODUCT DESCRIPTION --->
+                    <!-- <p class="my_title">Product Description</p>
+                    <p class="text-justify my_prod_text">{{ product.description }}</p>
+
+                   -->
+
+<!--                    {%  if product.stock <= 0 %}
+                        <p class="text-justify my_prod_text"><b>OUT OF STOCK</b></p>
+                    {%  else %}
+                        <a class="btn btn-secondary" href="#">Add to Cart</a>
+                    {% endif %}   -->
+                </div>
+            </div>
+        </div>
+
+{%  endblock %}

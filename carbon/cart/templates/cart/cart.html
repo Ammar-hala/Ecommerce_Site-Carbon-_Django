@@ -1,0 +1,149 @@
+{%  extends "shop/base.html" %}
+{% load static %}
+{% block metadescription %}
+    This is the shopping cart page. Proceed to review your items and place the order.
+{% endblock %}
+{% block title %}
+    Cart - Perfect Cushion Store
+{% endblock %}
+{% block content %}
+    {% if not cart_items %}
+        <div>
+            <div class="text-center">
+                <br>
+                <h1 class="'text-center my_title">
+                    Your Shopping Cart is Empty
+                </h1>
+                <br>
+                <p class = "text-center">
+                    Please click <a href="{% url 'shop:allProdCat' %}">here&nbsp;</a>to continue shopping
+                </p>
+            </div>
+        </div>
+    {% else %}
+        <div>
+            <div class="text-center">
+                <br>
+                <h1 class="text-center my_title">
+                    Your shopping cart
+                </h1>
+                <br>
+            </div>
+        </div>
+
+        <div class="row mx-auto">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center">
+              <div class="table-responsive-sm">
+                <table class="table">
+                  <thead>
+                    <tr class="border-2 mr-2" style="font-size:12px;">
+                      <th scope="col" class="bg-light">
+                        <div class="p-2 px-1 text-uppercase">Product</div>
+                      </th>
+                      <th scope="col" class="bg-light">
+                        <div class="py-2 ">Size</div>
+                      </th>
+                      <th scope="col" class="bg-light">
+                        <div class="py-2 ">Unit Price</div>
+                      </th>
+                      <th scope="col" class="bg-light">
+                        <div class="py-2">Total Price</div>
+                      </th>
+                      <th scope="col" class="bg-light">
+                        <div class="py-2">Quantity</div>
+                      </th>
+
+                      <th scope="col" class="bg-light">
+                        <div class="py-2">Remove</div>
+                      </th>
+                    </tr>
+                  </thead>
+
+
+
+              <tbody>
+                {% for cart_item in cart_items %}
+                <tr  >
+                  <th scope="row" class="border-2" >
+
+                      <div class="ml-2 text-center ">
+                      <a  class="align-middle "  href="{{ cart_item.product.get_url }}"><img src="{{ cart_item.product.image.url }}" class="float-left rounded custom_image "></a>
+                      <br>
+                      <a href="{{ cart_item.product.get_url }}" class="text-dark align-middle">{{ cart_item.product.name }}</a>
+
+                        {% if cart_item.quantity < cart_item.product.stock %}
+                                        <div class="mt-1 ">
+                                            {% if cart_item.variations.all %}
+                                            {% for subitem in cart_item.variations.all %}
+
+                                            {% if subitem.stock > cart_item.quantity %}
+                                                <a href="{% url 'cart:add_cart_var' cart_item.product.id subitem.id %}" ><i class="fas fa-plus-circle custom_icon"></i></a>&nbsp;
+                                            {% endif %}
+                                            <a href="{% url 'cart:cart_remove_var' cart_item.product.id subitem.id %}" ><i class="fas fa-minus custom_icon"></i></a>
+
+                                            {% endfor %}
+
+                                            {% else %}
+
+                                            <a href="{% url 'cart:add_cart' cart_item.product.id %}" ><i class="fas fa-plus custom_icon"></i></a>&nbsp;
+
+                                            <a href="{% url 'cart:cart_remove' cart_item.product.id %}" ><i class="fas fa-minus custom_icon"></i></a>
+
+                                            {% endif %}
+                                              <!-- cart:add_cart with id as param -->
+                                        </div>
+                                    {% else %}
+                                        <div class="mt-1">
+                                          {% if cart_item.variations.all %}
+                                          {% for subitem in cart_item.variations.all %}
+
+                                          <a href="{% url 'cart:cart_remove_var' cart_item.product.id subitem.id %}" ><i class="fas fa-minus-circle custom_icon"></i></a>
+
+                                          {% endfor %}
+                                          {% else %}
+                                          <a href="{% url 'cart:cart_remove' cart_item.product.id %}" ><i class="fas fa-minus-circle custom_icon"></i></a>
+                                          {% endif %}
+
+                                        </div>
+
+                                    {% endif %}
+                      </div>
+
+
+
+                  </th>
+                  <td class="align-middle">{% if cart_item.variations.all %}{% for subitem in cart_item.variations.all %}<a class="text-muted"> {{ subitem.title|capfirst }}</a>{% endfor %} {% else %}
+                  <a class="text-muted" > /0</a>{% endif %} </td>
+                  <td class="align-middle"><a class="text-muted">{{ cart_item.product.price }}</a></td>
+                  <td class="align-middle"><a class="text-muted">{{ cart_item.sub_total }}</a></td>
+                  <td class="align-middle"><a class="text-muted">{{ cart_item.quantity }}</a></td>
+                  <td class="align-middle"><a href="{% url 'cart:full_remove' cart_item.product.id %}" class="text-dark"><i class="fa fa-trash"></i></a></td>
+                </tr>
+
+
+                  {% endfor %}
+              </tbody>
+
+                </table>
+                </div>
+                <a class="float-left" href="{% url 'shop:allProdCat' %}" style="color:black; text-decoration:none; font-size:15px"><i class="fa fa-arrow-left mr-2 "></i>Continue Shopping</a>
+                <div class="float-right">
+
+                    <a>
+                        Your total is: <strong class="mr-2 ">Rs:{{ total }}</strong>
+                    </a>
+                    <br>
+
+
+                        <a href="{% url 'cart:checkout' %}" class="btn btn-secondary rounded " style="background-color:black;">PLACE ORDER</a>
+
+                    </div>
+            </div>
+
+
+            </div>
+
+        <br>
+    {% endif %}
+
+{% endblock %}
